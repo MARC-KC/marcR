@@ -1,0 +1,27 @@
+Package: marcR
+Title: Helpful Functions Used By The MARC-GIS Team
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "MARC-GIS", role = c("aut"), email = "marc_gis@marc.org"),
+   person(given = "Jacob", family = "Peterson", role = c("aut", "cre"), email = "marc_gis@marc.org"))
+Description: What the package does (one paragraph).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    magrittr,
+    glue,
+    DBI,
+    odbc,
+    dplyr,
+    stringr,
+    keyring,
+    purrr,
+    osmdata,
+    tibble,
+    crayon,
+    sf
+Remotes: 
+    github::yonghah/esri2sf
