@@ -14,7 +14,7 @@ will list the available keys prefixed with 'DB_'}
 OBDC connection object returned from DBI::dbConnect()
 }
 \description{
-Creates connection to ODBC database using the data contained in keyrings.
+Creates connection to ODBC database using the data contained in keyrings. This is generally used for internal purposes at MARC to make database connections a lazier proccess with {keryring}.
 }
 \details{
 Keys should be set up prior to using the function to a style similar to:\cr

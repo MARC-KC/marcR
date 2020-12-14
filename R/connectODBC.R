@@ -1,7 +1,7 @@
 #' @title Connect to ODBC Database Using keyring
 #'
 #' @description
-#' Creates connection to ODBC database using the data contained in keyrings.
+#' Creates connection to ODBC database using the data contained in keyrings. This is generally used for internal purposes at MARC to make database connections a lazier proccess with {keryring}.
 #'
 #' @details
 #' Keys should be set up prior to using the function to a style similar to:\cr
@@ -41,6 +41,12 @@ connectODBC <- function(databaseString = NULL) {
     DB_Connections <- keyring::key_list() %>% dplyr::pull(service) %>% stringr::str_subset("^DB_")
     stop(glue::glue("Keys available for the folloiwng database strings: '", glue::glue_collapse(DB_Connections, sep = "', '"), "'
                     Add more with `keyring::key_set()`"))
+  }
+  
+  if(!(databaseString %in% keyring::key_list()[['service']])) {
+    stop(glue::glue('
+Lazy server connection for {key.service} not found.
+Consult Jacob Peterson to get this set up.'))
   }
   
   
