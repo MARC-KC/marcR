@@ -30,7 +30,7 @@ library(DBI)
 
 con <- connectODBC("DB_<databaseName>.<schemaName>")
 
-table <- getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
+table <- DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
 }
 
 }

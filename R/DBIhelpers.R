@@ -20,10 +20,10 @@
 #'
 #' con <- connectODBC("DB_<databaseName>.<schemaName>")
 #'
-#' tableColNames <- DBI_GetColNames(con, "<schemaName>", "<tableName>")
+#' tableColNames <- DBI_getColNames(con, "<schemaName>", "<tableName>")
 #' }
 #' @export
-DBI_GetColNames <- function(conn, schema, tableName) {
+DBI_getColNames <- function(conn, schema, tableName) {
   out <- DBI::dbGetQuery(conn, glue::glue("SELECT TOP 0 * FROM {schema}.{tableName}")) %>% names()
   return(out)
 }
@@ -49,7 +49,7 @@ DBI_GetColNames <- function(conn, schema, tableName) {
 #'
 #' con <- connectODBC("DB_<databaseName>.<schemaName>")
 #'
-#' table <- getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
+#' table <- DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
 #' }
 #'
 #' @export
@@ -87,10 +87,10 @@ DBI_getOBDCtable <- function(conn, query) {
 #' con <- connectODBC("DB_<databaseName>.<schemaName>")
 #' 
 #' #This is not set up to be a real example
-#' tableColNames <- DBI_AppendSFtoTable(con, sfTable, "<schemaName>", "<tableName>")
+#' tableColNames <- DBI_appendSFtoTable(con, sfTable, "<schemaName>", "<tableName>")
 #' }
 #' @export
-DBI_AppendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQuery = NULL, warnings = getOption("warn")) {
+DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQuery = NULL, warnings = getOption("warn")) {
   
   #Suppress Warnings
   warnDef = getOption("warn")
@@ -192,7 +192,7 @@ DBI_AppendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 #' @export
 sf_readSQL <- function(conn, schema, tableName, geomCol) {
   
-  tableColNames <- DBI_GetColNames(conn, schema, tableName)
+  tableColNames <- DBI_getColNames(conn, schema, tableName)
   
   tableColStr <- tableColNames %>% stringr::str_replace(geomCol, glue::glue("{geomCol}].STAsBinary() AS [{geomCol}")) %>% glue::glue_collapse(sep = "], [")
   
