@@ -9,7 +9,7 @@
 #'
 #' @return Character vector of column names in specified table.
 #'
-#' @section Creation notes: First created in 2020-11-03 with the script
+#' @section Creation notes: First created on 2020-11-03 with the script
 #'   OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 #'
 #' @author Jacob Peterson
@@ -29,6 +29,38 @@ DBI_GetColNames <- function(conn, schema, tableName) {
 }
 
 
+#' @title Get Table from OBDC connection
+#'
+#' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
+#'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
+#' @param query SQL Query to server to request table
+#'
+#'
+#' @return Tibble of a database table
+#'
+#' @section Creation notes: First created in 2020-12-11 while working in the
+#'   MARC-KC/CovidDataEntry Repository
+#'
+#' @author Jacob Peterson
+#'
+#' @examples \dontrun{ 
+#' 
+#' library(DBI)
+#'
+#' con <- connectODBC("DB_<databaseName>.<schemaName>")
+#'
+#' table <- getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
+#' }
+#'
+#' @export
+DBI_getOBDCtable <- function(conn, query) {
+  data <- query %>% 
+    DBI::dbGetQuery(conn, .) %>% 
+    tibble::as_tibble()
+}
+
+
+
 
 #' @title Append sf table to a Microsoft SQL table
 #'
@@ -43,7 +75,7 @@ DBI_GetColNames <- function(conn, schema, tableName) {
 #'
 #' @return NULL
 #'
-#' @section Creation notes: First created in 2020-11-03 with the script
+#' @section Creation notes: First created on 2020-11-03 with the script
 #'   OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 #'
 #' @author Jacob Peterson

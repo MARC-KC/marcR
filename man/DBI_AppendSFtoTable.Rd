@@ -31,7 +31,7 @@ DBI_AppendSFtoTable(
 Append sf table to a Microsoft SQL table
 }
 \section{Creation notes}{
- First created in 2020-11-03 with the script
+ First created on 2020-11-03 with the script
 OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 }
 

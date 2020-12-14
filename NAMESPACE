@@ -3,6 +3,7 @@
 export("%>%")
 export(DBI_AppendSFtoTable)
 export(DBI_GetColNames)
+export(DBI_getOBDCtable)
 export(connectODBC)
 export(epoch2Datetime)
 export(glueIndentLines)

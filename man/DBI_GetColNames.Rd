@@ -22,7 +22,7 @@ Character vector of column names in specified table.
 Retrieve Column Names from an Microsoft SQL Connection
 }
 \section{Creation notes}{
- First created in 2020-11-03 with the script
+ First created on 2020-11-03 with the script
 OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 }
 
