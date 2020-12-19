@@ -35,6 +35,9 @@ tibble
 \description{
 Helper for group_by |> mutate(rankID) |> filter(rankID)
 }
+\details{
+Uses a dense rank to mimic Microsoft T-SQL rank
+}
 \section{Creation notes}{
  First created in 2020-12-11 while working in the
 MARC-KC/CovidDataEntry Repository

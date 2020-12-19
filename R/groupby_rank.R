@@ -10,6 +10,8 @@
 #' 
 #' @return tibble
 #' 
+#' @details Uses a dense rank to mimic Microsoft T-SQL rank
+#' 
 #' @section Creation notes: First created in 2020-12-11 while working in the
 #'   MARC-KC/CovidDataEntry Repository
 #' 
@@ -26,9 +28,9 @@ groupby_rank <- function(.data, ..., rankby, rankDesc = TRUE, filterIDs = NULL, 
   
   #Create rank ID
   if (rankDesc) {
-    data <- dplyr::mutate(data, rankID = rank(dplyr::desc(!!rankby)))
+    data <- dplyr::mutate(data, rankID = dplyr::dense_rank(dplyr::desc(!!rankby)))
   } else {
-    data <- dplyr::mutate(data, rankID = rank(!!rankby))
+    data <- dplyr::mutate(data, rankID = dplyr::dense_rank(!!rankby))
   }
   
   #filter by rankID
