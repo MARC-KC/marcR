@@ -17,6 +17,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' # devtools::install_github('yonghah/esri2sf')
 #' library(esri2sf)
 #'
 #' esriData <- esri2sf::esri2df(url = "https://gis2.marc2.org/arcgis/rest/services/HumanServices/COVIDv2/MapServer/5")
