@@ -71,6 +71,12 @@
 #' @export
 osm_keyValueDL <- function(keyValDF, bbox) {
   
+  if (!requireNamespace("osmdata", quietly = TRUE)) {
+    stop("Package \"osmdata\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
+  
   keyValDF <- keyValDF %>% dplyr::mutate(id = 1:n())
   
   outDF <- keyValDF %>% dplyr::mutate(osm = purrr::map2(key, value, ~ {
@@ -112,6 +118,12 @@ osm_keyValueDL <- function(keyValDF, bbox) {
 #' }
 #' @export
 osm_keyValueDF <- function() {
+  
+  if (!requireNamespace("osmdata", quietly = TRUE)) {
+    stop("Package \"osmdata\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
   keyValueDF <- purrr::map_dfr(osmdata::available_features(), ~ {
     df <- tibble::tibble(key = .x, value = osmdata::available_tags(.x))
     if (nrow(df) == 0 ) {

@@ -19,11 +19,11 @@ Imports:
     stringr,
     keyring,
     purrr,
-    osmdata,
     tibble,
     crayon,
     sf
 Suggests: 
-    esri2sf (>= 0.1.1)
-Remotes:  
+    esri2sf (>= 0.1.1),
+    osmdata
+Remotes: 
     github::yonghah/esri2sf
