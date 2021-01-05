@@ -4,7 +4,14 @@
 \alias{SQL_createTable}
 \title{SQL_createTable}
 \usage{
-SQL_createTable(df = NULL, types = NULL, names, charLength, tableName)
+SQL_createTable(
+  df = NULL,
+  types = NULL,
+  names,
+  charLength,
+  tableName,
+  primaryKey = NULL
+)
 }
 \arguments{
 \item{df}{data.frame/tibble. Optional. Must have df or types specified}
@@ -16,6 +23,8 @@ SQL_createTable(df = NULL, types = NULL, names, charLength, tableName)
 \item{charLength}{Vector of lengths used for character (NVARCHAR) types.}
 
 \item{tableName}{Name of database table you want to create.}
+
+\item{primaryKey}{Name of the primary key for the table. Default Null does not create one.}
 }
 \value{
 A string containing the SQL code to create the specified table
@@ -40,7 +49,7 @@ irisHelper <- tibble::tribble(
   'Species',          '10',     'c'
 )
 
-SQL_createTable(df = iris, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+SQL_createTable(df = iris, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris", primaryKey = 'UniqueID')
 SQL_createTable(types = irisHelper[['type']] , names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
 }
 

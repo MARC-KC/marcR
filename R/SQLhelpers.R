@@ -6,6 +6,7 @@
 #' @param names Character vector of columns names to include in database table
 #' @param charLength Vector of lengths used for character (NVARCHAR) types.
 #' @param tableName Name of database table you want to create.
+#' @param primaryKey Name of the primary key for the table. Default Null does not create one.
 #' 
 #' @return A string containing the SQL code to create the specified table
 #' 
@@ -24,12 +25,12 @@
 #'   'Species',          '10',     'c'
 #' )
 #' 
-#' SQL_createTable(df = iris, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+#' SQL_createTable(df = iris, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris", primaryKey = 'UniqueID')
 #' SQL_createTable(types = irisHelper[['type']] , names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
 #' }
 #' 
 #' @export
-SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableName) {
+SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableName, primaryKey = NULL) {
 
 
 #ensure charLength is a character vector
@@ -75,8 +76,14 @@ if (!is.null(df)) {
 
 
 
-innerSQL <- glue::glue('{names} {SQLtype}') %>% 
+innerSQL <<- glue::glue('[{names}] {SQLtype}') %>% 
   glue::glue_collapse(sep = ' NULL,\n') %>% glue::glue(" NULL")
+
+# [UniqueID] [int] IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+
+if (!is.null(primaryKey)) {
+  innerSQL <-  glue::glue_collapse(c(glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), innerSQL), sep = ',\n')
+}
 
 SQLout <- glue::glue('CREATE TABLE {tableName} ( \n{marcR::glueIndentLines(innerSQL, 1)}\n)')
 
