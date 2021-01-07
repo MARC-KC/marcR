@@ -5,6 +5,7 @@
 #' 
 #' @param df the joined data.frame
 #' @param suffix suffix used to diferentiate the columns needing coalesced. Defaults to c(".x", ".y")
+#' @param showMessage TRUE/FALSE on whether to print message. Default TRUE.
 #' 
 #' @return df with the join suffixed columns coalesced
 #' 
@@ -23,7 +24,7 @@
 #' cdtHospSumData <- dplyr::full_join(cdtData, hospData, by = c("GeoID", "Date")) %>% coalesceJoin()
 #' }
 #' @export
-coalesceJoin <- function(df, suffix = c(".x", ".y")) {
+coalesceJoin <- function(df, suffix = c(".x", ".y"), showMessage = TRUE) {
   
   suffixNames <- purrr::map(suffix, ~names(df)[endsWith(names(df),.x)]) %>% unlist()
   coalesceNames <- purrr::map(suffix[1], ~names(df)[endsWith(names(df),.x)]) %>% unlist() %>% stringr::str_remove(suffix[1])
@@ -36,7 +37,9 @@ coalesceJoin <- function(df, suffix = c(".x", ".y")) {
   
   otherData <- dplyr::select(df, -all_of(suffixNames))
   
-  cat(crayon::yellow(glue::glue('Coalesced the following columns: {glue::glue_collapse(coalesceNames, sep = ", ")}'), '\n'))
+  if (showMessage) {
+    message(crayon::yellow(glue::glue('Coalesced the following columns: {glue::glue_collapse(coalesceNames, sep = ", ")}')))
+  }
   
   return(dplyr::bind_cols(coalesced, otherData))
   

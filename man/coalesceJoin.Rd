@@ -4,12 +4,14 @@
 \alias{coalesceJoin}
 \title{Coalesce Duplicate Fields from a Join}
 \usage{
-coalesceJoin(df, suffix = c(".x", ".y"))
+coalesceJoin(df, suffix = c(".x", ".y"), showMessage = TRUE)
 }
 \arguments{
 \item{df}{the joined data.frame}
 
 \item{suffix}{suffix used to diferentiate the columns needing coalesced. Defaults to c(".x", ".y")}
+
+\item{showMessage}{TRUE/FALSE on whether to print message. Default TRUE.}
 }
 \value{
 df with the join suffixed columns coalesced
