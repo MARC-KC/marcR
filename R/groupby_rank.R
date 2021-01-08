@@ -44,7 +44,7 @@ groupby_rank <- function(.data, ..., rankby, rankDesc = TRUE, filterIDs = NULL, 
   }
   
   #Ungroup
-  if (removeRankCol) {
+  if (doUngroup) {
     data <- dplyr::ungroup(data)
   }
   
