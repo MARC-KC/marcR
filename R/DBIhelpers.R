@@ -57,6 +57,8 @@ DBI_getOBDCtable <- function(conn, query) {
   data <- query %>% 
     DBI::dbGetQuery(conn, .) %>% 
     tibble::as_tibble()
+  
+  return(data)
 }
 
 
