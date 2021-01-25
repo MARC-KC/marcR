@@ -1,6 +1,6 @@
 Package: marcR
 Title: Helpful Functions Used By The MARC-GIS Team
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: 
     c(person(given = "MARC-GIS", role = c("aut"), email = "marc_gis@marc.org"),
    person(given = "Jacob", family = "Peterson", role = c("aut", "cre"), email = "marc_gis@marc.org"))
