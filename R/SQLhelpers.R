@@ -76,10 +76,9 @@ if (!is.null(df)) {
 
 
 
-innerSQL <<- glue::glue('[{names}] {SQLtype}') %>% 
+innerSQL <- glue::glue('[{names}] {SQLtype}') %>% 
   glue::glue_collapse(sep = ' NULL,\n') %>% glue::glue(" NULL")
 
-# [UniqueID] [int] IDENTITY(1,1) PRIMARY KEY CLUSTERED,
 
 if (!is.null(primaryKey)) {
   innerSQL <-  glue::glue_collapse(c(glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), innerSQL), sep = ',\n')
