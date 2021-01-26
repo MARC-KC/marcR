@@ -1,5 +1,73 @@
+
+
+
+#' @title SQL_newColumnFormatter
+#' @description Creates the column definition part of a SQL query. Used as a helper for \code{SQL_createTable} and \code{SQL_addColumns}
+#' 
+#' @param df data.frame/tibble. Optional. Must have df or types specified
+#' @param types Character vector of new column types (readr-like). Optional. Must have df or types specified
+#' @param names Character vector of columns names to include in database table
+#' @param charLength Vector of lengths used for character (NVARCHAR) types.
+#' 
+#' @return A string containing partial SQL query for column definitions.
+#' 
+#' @export  
+SQL_newColumnFormatter <- function(df = NULL, types = NULL, names, charLength) {
+  
+  #ensure charLength is a character vector
+  charLength <- dplyr::if_else(is.na(charLength), '', as.character(charLength))
+  
+  
+  
+  if (!is.null(df)) {  
+    
+    #order columns to match names
+    df <- dplyr::select(df, all_of(names))
+    
+    #change all factors to character
+    df <- dplyr::mutate(df, dplyr::across(where(is.factor), as.character))
+    
+    #get column types
+    type <- purrr::map_chr(df, ~class(.x)[1])
+    
+    
+    #create SQL types
+    SQLtype <- dplyr::case_when(
+      type == "character" ~ paste0("[NVARCHAR](", charLength, ")"),
+      type == "integer" ~ "[INT]",
+      type %in% c("numeric", "double") ~ "[REAL]",
+      type == "logical" ~ "[BIT]",
+      type == "Date" ~ "[DATE]",
+      type == "POSIXct" ~ "[DATETIME]"
+    )
+    
+    
+  } else if (!is.null(types)) {
+    
+    #create SQL types
+    SQLtype <- dplyr::case_when(
+      types == "c" ~ paste0("[NVARCHAR](", charLength, ")"),
+      types == "i" ~ "[INT]",
+      types == "d" ~ "[REAL]",
+      types == "l" ~ "[BIT]",
+      types == "D" ~ "[DATE]",
+      types == "T" ~ "[DATETIME]"
+    )
+  }
+  
+  
+  innerSQL <- glue::glue('[{names}] {SQLtype}') %>% 
+    glue::glue_collapse(sep = ' NULL,\n') %>% glue::glue(" NULL")
+  
+  return(innerSQL)
+  
+}
+
+
+
+
 #' @title SQL_createTable
-#' @description Creates raw SQL code to be used to create a table
+#' @description Creates raw SQL query to be used to create a table
 #' 
 #' @param df data.frame/tibble. Optional. Must have df or types specified
 #' @param types Character vector of new column types (readr-like). Optional. Must have df or types specified
@@ -32,59 +100,60 @@
 #' @export
 SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableName, primaryKey = NULL) {
 
+  #Format main columns
+  innerSQL <- SQL_newColumnFormatter(df = df, types = types, names = names, charLength = charLength)
 
-#ensure charLength is a character vector
-charLength <- dplyr::if_else(is.na(charLength), '', as.character(charLength))
-
-
-
-if (!is.null(df)) {  
+  #Add primary key if needed
+  if (!is.null(primaryKey)) {
+    innerSQL <-  glue::glue_collapse(c(glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), innerSQL), sep = ',\n')
+  }
   
-  #order columns to match names
-  df <- dplyr::select(df, all_of(names))
+  #Format the full CREATE TABLE query
+  SQLout <- glue::glue('CREATE TABLE {tableName} ( \n{marcR::glueIndentLines(innerSQL, 1)}\n)')
   
-  #change all factors to character
-  df <- dplyr::mutate(df, dplyr::across(where(is.factor), as.character))
-  
-  #get column types
-  type <- purrr::map_chr(df, ~class(.x)[1])
-  
-  
-  #create SQL types
-  SQLtype <- dplyr::case_when(
-    type == "character" ~ paste0("[NVARCHAR](", charLength, ")"),
-    type == "integer" ~ "[INT]",
-    type %in% c("numeric", "double") ~ "[REAL]",
-    type == "logical" ~ "[BIT]",
-    type == "Date" ~ "[DATE]",
-    type == "POSIXct" ~ "[DATETIME]"
-  )
-  
-  
-} else if (!is.null(types)) {
-  
-  #create SQL types
-  SQLtype <- dplyr::case_when(
-    types == "c" ~ paste0("[NVARCHAR](", charLength, ")"),
-    types == "i" ~ "[INT]",
-    types == "d" ~ "[REAL]",
-    types == "l" ~ "[BIT]",
-    types == "D" ~ "[DATE]",
-    types == "T" ~ "[DATETIME]"
-  )
+  return(SQLout)
 }
 
 
 
-innerSQL <- glue::glue('[{names}] {SQLtype}') %>% 
-  glue::glue_collapse(sep = ' NULL,\n') %>% glue::glue(" NULL")
 
 
-if (!is.null(primaryKey)) {
-  innerSQL <-  glue::glue_collapse(c(glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), innerSQL), sep = ',\n')
+#' @title SQL_addColumns
+#' @description Creates raw SQL query to be used to add columns to a table
+#' 
+#' @param df data.frame/tibble. Optional. Must have df or types specified
+#' @param types Character vector of new column types (readr-like). Optional. Must have df or types specified
+#' @param names Character vector of columns names to include in database table
+#' @param charLength Vector of lengths used for character (NVARCHAR) types.
+#' @param tableName Name of database table you want to create.
+#' 
+#' @return A string containing the SQL code to add the columns to the specified table
+#' 
+#' @examples
+#' \dontrun{
+#' head(iris)
+#' irisdf_addcolumns <- tibble::tibble(test = as.integer(1), test2 = 'test', test3 = TRUE, test4 = Sys.time())
+#' irisHelper <- tibble::tribble(
+#'   ~name,      ~length,  ~type,
+#'   'test',     NA,       'i',
+#'   'test2',    10,       'c',
+#'   'test3',    NA,       'l',
+#'   'test4',    NA,       'T',
+#' )
+#' SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+#' SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+#' }
+#' 
+#' @export
+SQL_addColumns <- function(df = NULL, types = NULL, names, charLength, tableName) {
+  
+  #Format main columns
+  innerSQL <- SQL_newColumnFormatter(df = df, types = types, names = names, charLength = charLength)
+  
+  #Format the full CREATE TABLE query
+  SQLout <- glue::glue('ALTER TABLE {tableName}\nADD\n{marcR::glueIndentLines(innerSQL, 1)}')
+  
+  return(SQLout)
+  
 }
 
-SQLout <- glue::glue('CREATE TABLE {tableName} ( \n{marcR::glueIndentLines(innerSQL, 1)}\n)')
-
-return(SQLout)
-}

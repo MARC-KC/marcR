@@ -30,7 +30,7 @@ SQL_createTable(
 A string containing the SQL code to create the specified table
 }
 \description{
-Creates raw SQL code to be used to create a table
+Creates raw SQL query to be used to create a table
 }
 \section{Creation notes}{
  First created in 2020-12-15 while working in the
