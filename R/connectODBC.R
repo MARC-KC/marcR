@@ -39,13 +39,13 @@
 connectODBC <- function(databaseString = NULL) {
   if (is.null(databaseString)) {
     DB_Connections <- keyring::key_list() %>% dplyr::pull(service) %>% stringr::str_subset("^DB_")
-    stop(glue::glue("Keys available for the folloiwng database strings: '", glue::glue_collapse(DB_Connections, sep = "', '"), "'
+    stop(glue::glue("Keys available for the following database strings: '", glue::glue_collapse(DB_Connections, sep = "', '"), "'
                     Add more with `keyring::key_set()`"))
   }
   
   if(!(databaseString %in% keyring::key_list()[['service']])) {
     stop(glue::glue('
-Lazy server connection for {key.service} not found.
+Lazy server connection for {databaseString} not found.
 Consult Jacob Peterson to get this set up.'))
   }
   
