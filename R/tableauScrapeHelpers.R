@@ -185,9 +185,7 @@ tableauScrape_extractData <- function(data, worksheetID) {
     }
     df[frameNames[[i]]] <- frameData[i]
   }
-  # options(width = 1200)
   df <- as.data.frame(df, stringsAsFactors = FALSE)
-  # print(df)
-  
+
   return(df)
 }
