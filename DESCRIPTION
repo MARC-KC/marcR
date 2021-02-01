@@ -23,7 +23,11 @@ Imports:
     crayon,
     sf,
     lubridate,
-    httr
+    httr,
+    xml2,
+    rjson,
+    rvest,
+    RSelenium
 Suggests: 
     esri2sf (>= 0.1.1),
     osmdata
