@@ -27,7 +27,10 @@ Imports:
     xml2,
     rjson,
     rvest,
-    RSelenium
+    RSelenium,
+    binman,
+    rappdirs,
+    semver
 Suggests: 
     esri2sf (>= 0.1.1),
     osmdata
