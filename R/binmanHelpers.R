@@ -50,14 +50,14 @@ binman_predl_github_assets <- function(url, platform, history = 3L, appname, pla
     return(dllist)
   }
   
+  
   dllist <- dllist %>% purrr::map(~{
-    .x %>% dplyr::mutate(
-      dir = dir %>% purrr::map(~{
-        .x %>% stringr::str_extract("(?<=/binman/).*$") %>%
-          file.path(dlPath, "binman", .)
-      }),
-      exists = purrr::map_lgl(dir, ~dir.exists(dirname(.x))) %>% `names<-`(NULL)
-    )
+    .x %>% dplyr::mutate(dir = dir %>% purrr::map(~{
+      .x %>% normalizePath(path = ., winslash = "/", mustWork = FALSE) %>% 
+        stringr::str_extract("(?<=/binman/).*$") %>% 
+        file.path(dlPath, "binman", .)
+    }), exists = purrr::map_lgl(dir, ~dir.exists(dirname(.x))) %>% 
+      `names<-`(NULL))
   })
   
   return(dllist)
