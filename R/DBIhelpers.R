@@ -111,11 +111,11 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
   #Create Temp DF 
   geomColStr <- paste0(geomCol, "_str")
   dfTable <- sfTable 
-  dfTable[geomColStr] <- sf::st_as_text(pull(dfTable, geomCol))
+  dfTable[geomColStr] <- sf::st_as_text(dplyr::pull(dfTable, geomCol))
   dfTable <- sf::st_set_geometry(dfTable, NULL)
   
   #Create DBI name object for Temp table
-  nameTemp <- paste0("##TempSpatial", format(Sys.time(), "%Y%m%d%H%M%S"), round(runif(1,1,500)))
+  nameTemp <- paste0("##TempSpatial", format(Sys.time(), "%Y%m%d%H%M%S"), round(stats::runif(1,1,500)))
   
   
   #Create Temp SQL Table
@@ -203,9 +203,9 @@ SELECT [{tableColStr}]
 FROM {schema}.{tableName}
 ")
   
-  out <- st_read(conn, 
-                 geometry_column = geomCol, 
-                 query = query)
+  out <- sf::st_read(conn, 
+                     geometry_column = geomCol, 
+                     query = query)
   
   return(out)
 }

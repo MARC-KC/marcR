@@ -2,8 +2,6 @@
 #'
 #' @description
 #' Splits a string by newlines and adds a chosen number of tabs to each line.
-#'
-#' @details
 #' 
 #'
 #' @param string String you want to add tabs to

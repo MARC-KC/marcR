@@ -17,9 +17,6 @@ A \code{glue} character string
 \description{
 Splits a string by newlines and adds a chosen number of tabs to each line.
 }
-\details{
-
-}
 \section{Creation notes}{
  First created in 2020-Oct while for building dynamic
 SQL statements.

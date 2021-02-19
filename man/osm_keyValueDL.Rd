@@ -9,6 +9,8 @@ osm_keyValueDL(keyValDF, bbox)
 \arguments{
 \item{keyValDF}{Dataframe with two columns, 'key' and 'value'. Can be created
 with \code{\link[=osm_keyValueDF]{osm_keyValueDF()}}}
+
+\item{bbox}{the bounding box for the download area}
 }
 \value{
 A list with class osmdata containing the spatial data within its
@@ -35,7 +37,10 @@ library(osmdata)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Download MARC Boundaries ####
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-MARCprojection <- "+proj=tmerc +lat_0=36.16666666666666 +lon_0=-94.5 +k=0.9999411764705882 +x_0=850000 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 +no_defs"
+MARCprojection <- paste0(
+"+proj=tmerc +lat_0=36.16666666666666 +lon_0=-94.5 +k=0.9999411764705882 ", 
+"+x_0=850000 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 ", 
+"+no_defs")
 
 
 #For fixing column names form the table joins
@@ -46,7 +51,8 @@ removeColnamePrefix <- function(df) {
   df
 }
 
-MARCjurisdictions <- esri2sf::esri2sf(url = "https://gis2.marc2.org/arcgis/rest/services/HumanServices/COVIDv2/MapServer/0") \%>\%
+MARCjurisdictions <- esri2sf::esri2sf(url = 
+"https://gis2.marc2.org/arcgis/rest/services/HumanServices/COVIDv2/MapServer/0") \%>\%
   sf::st_make_valid() \%>\% #fixes some issues with data coming from ESRI
   sf::st_transform(MARCprojection) \%>\%#puts it in MARC cordinates
   removeColnamePrefix() #For fixing column names form the table joins

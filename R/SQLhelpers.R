@@ -68,19 +68,21 @@ SQL_newColumnFormatter <- function(df = NULL, types = NULL, names, charLength) {
 
 #' @title SQL_createTable
 #' @description Creates raw SQL query to be used to create a table
-#' 
+#'
 #' @param df data.frame/tibble. Optional. Must have df or types specified
-#' @param types Character vector of new column types (readr-like). Optional. Must have df or types specified
+#' @param types Character vector of new column types (readr-like). Optional.
+#'   Must have df or types specified
 #' @param names Character vector of columns names to include in database table
 #' @param charLength Vector of lengths used for character (NVARCHAR) types.
 #' @param tableName Name of database table you want to create.
-#' @param primaryKey Name of the primary key for the table. Default Null does not create one.
-#' 
+#' @param primaryKey Name of the primary key for the table. Default Null does
+#'   not create one.
+#'
 #' @return A string containing the SQL code to create the specified table
-#' 
+#'
 #' @section Creation notes: First created in 2020-12-15 while working in the
 #'   MARC-KC/CovidDataEntry Repository
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' head(iris)
@@ -92,11 +94,14 @@ SQL_newColumnFormatter <- function(df = NULL, types = NULL, names, charLength) {
 #'   'Petal.Width',      NA,       'd',
 #'   'Species',          '10',     'c'
 #' )
-#' 
-#' SQL_createTable(df = iris, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris", primaryKey = 'UniqueID')
-#' SQL_createTable(types = irisHelper[['type']] , names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+#'
+#' SQL_createTable(df = iris, names = irisHelper[['name']],
+#'    charLength = irisHelper[['length']],
+#'    tableName = "schema.iris", primaryKey = 'UniqueID')
+#' SQL_createTable(types = irisHelper[['type']] , names = irisHelper[['name']],
+#'    charLength = irisHelper[['length']], tableName = "schema.iris")
 #' }
-#' 
+#'
 #' @export
 SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableName, primaryKey = NULL) {
 
@@ -105,7 +110,9 @@ SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableNam
 
   #Add primary key if needed
   if (!is.null(primaryKey)) {
-    innerSQL <-  glue::glue_collapse(c(glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), innerSQL), sep = ',\n')
+    innerSQL <-  glue::glue_collapse(c(
+      glue::glue('[{primaryKey}] [INT] IDENTITY(1,1) PRIMARY KEY CLUSTERED'), 
+      innerSQL), sep = ',\n')
   }
   
   #Format the full CREATE TABLE query
@@ -120,19 +127,22 @@ SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableNam
 
 #' @title SQL_addColumns
 #' @description Creates raw SQL query to be used to add columns to a table
-#' 
+#'
 #' @param df data.frame/tibble. Optional. Must have df or types specified
-#' @param types Character vector of new column types (readr-like). Optional. Must have df or types specified
+#' @param types Character vector of new column types (readr-like). Optional.
+#'   Must have df or types specified
 #' @param names Character vector of columns names to include in database table
 #' @param charLength Vector of lengths used for character (NVARCHAR) types.
 #' @param tableName Name of database table you want to create.
-#' 
-#' @return A string containing the SQL code to add the columns to the specified table
-#' 
+#'
+#' @return A string containing the SQL code to add the columns to the specified
+#'   table
+#'
 #' @examples
 #' \dontrun{
 #' head(iris)
-#' irisdf_addcolumns <- tibble::tibble(test = as.integer(1), test2 = 'test', test3 = TRUE, test4 = Sys.time())
+#' irisdf_addcolumns <- tibble::tibble(test = as.integer(1),
+#' test2 = 'test', test3 = TRUE, test4 = Sys.time())
 #' irisHelper <- tibble::tribble(
 #'   ~name,      ~length,  ~type,
 #'   'test',     NA,       'i',
@@ -140,10 +150,12 @@ SQL_createTable <- function(df = NULL, types = NULL, names, charLength, tableNam
 #'   'test3',    NA,       'l',
 #'   'test4',    NA,       'T',
 #' )
-#' SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
-#' SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+#' SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], 
+#' charLength = irisHelper[['length']], tableName = "schema.iris")
+#' SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], 
+#' charLength = irisHelper[['length']], tableName = "schema.iris")
 #' }
-#' 
+#'
 #' @export
 SQL_addColumns <- function(df = NULL, types = NULL, names, charLength, tableName) {
   

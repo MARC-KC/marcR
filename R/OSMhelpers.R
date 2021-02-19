@@ -5,6 +5,7 @@
 #'
 #' @param keyValDF Dataframe with two columns, 'key' and 'value'. Can be created
 #'   with [osm_keyValueDF()]
+#' @param  bbox the bounding box for the download area
 #'
 #' @return A list with class osmdata containing the spatial data within its
 #'   elements.
@@ -26,7 +27,10 @@
 #' #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #' # Download MARC Boundaries ####
 #' #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#' MARCprojection <- "+proj=tmerc +lat_0=36.16666666666666 +lon_0=-94.5 +k=0.9999411764705882 +x_0=850000 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 +no_defs"
+#' MARCprojection <- paste0(
+#' "+proj=tmerc +lat_0=36.16666666666666 +lon_0=-94.5 +k=0.9999411764705882 ", 
+#' "+x_0=850000 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 ", 
+#' "+no_defs")
 #'
 #'
 #' #For fixing column names form the table joins
@@ -37,7 +41,8 @@
 #'   df
 #' }
 #'
-#' MARCjurisdictions <- esri2sf::esri2sf(url = "https://gis2.marc2.org/arcgis/rest/services/HumanServices/COVIDv2/MapServer/0") %>%
+#' MARCjurisdictions <- esri2sf::esri2sf(url = 
+#' "https://gis2.marc2.org/arcgis/rest/services/HumanServices/COVIDv2/MapServer/0") %>%
 #'   sf::st_make_valid() %>% #fixes some issues with data coming from ESRI
 #'   sf::st_transform(MARCprojection) %>%#puts it in MARC cordinates
 #'   removeColnamePrefix() #For fixing column names form the table joins
@@ -80,7 +85,9 @@ osm_keyValueDL <- function(keyValDF, bbox) {
   keyValDF <- keyValDF %>% dplyr::mutate(id = 1:n())
   
   outDF <- keyValDF %>% dplyr::mutate(osm = purrr::map2(key, value, ~ {
-    cat(crayon::blue("Downloading", keyValDF[keyValDF$key == .x & keyValDF$value == .y, "id"], "/", nrow(keyValDF), "key =", .x, "; value =", .y, "\n"))
+    cat(crayon::blue("Downloading", 
+                     keyValDF[keyValDF$key == .x & keyValDF$value == .y, "id"], 
+                     "/", nrow(keyValDF), "key =", .x, "; value =", .y, "\n"))
     osmdata::opq(bbox) %>% 
       osmdata::add_osm_feature(key = .x, value = .y) %>% 
       osmdata::osmdata_sf()

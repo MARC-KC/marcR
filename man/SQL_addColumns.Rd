@@ -9,7 +9,8 @@ SQL_addColumns(df = NULL, types = NULL, names, charLength, tableName)
 \arguments{
 \item{df}{data.frame/tibble. Optional. Must have df or types specified}
 
-\item{types}{Character vector of new column types (readr-like). Optional. Must have df or types specified}
+\item{types}{Character vector of new column types (readr-like). Optional.
+Must have df or types specified}
 
 \item{names}{Character vector of columns names to include in database table}
 
@@ -18,7 +19,8 @@ SQL_addColumns(df = NULL, types = NULL, names, charLength, tableName)
 \item{tableName}{Name of database table you want to create.}
 }
 \value{
-A string containing the SQL code to add the columns to the specified table
+A string containing the SQL code to add the columns to the specified
+table
 }
 \description{
 Creates raw SQL query to be used to add columns to a table
@@ -26,7 +28,8 @@ Creates raw SQL query to be used to add columns to a table
 \examples{
 \dontrun{
 head(iris)
-irisdf_addcolumns <- tibble::tibble(test = as.integer(1), test2 = 'test', test3 = TRUE, test4 = Sys.time())
+irisdf_addcolumns <- tibble::tibble(test = as.integer(1),
+test2 = 'test', test3 = TRUE, test4 = Sys.time())
 irisHelper <- tibble::tribble(
   ~name,      ~length,  ~type,
   'test',     NA,       'i',
@@ -34,8 +37,10 @@ irisHelper <- tibble::tribble(
   'test3',    NA,       'l',
   'test4',    NA,       'T',
 )
-SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
-SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], charLength = irisHelper[['length']], tableName = "schema.iris")
+SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], 
+charLength = irisHelper[['length']], tableName = "schema.iris")
+SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], 
+charLength = irisHelper[['length']], tableName = "schema.iris")
 }
 
 }

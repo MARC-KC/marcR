@@ -14,13 +14,18 @@ will list the available keys prefixed with 'DB_'}
 OBDC connection object returned from DBI::dbConnect()
 }
 \description{
-Creates connection to ODBC database using the data contained in keyrings. This is generally used for internal purposes at MARC to make database connections a lazier proccess with {keryring}.
+Creates connection to ODBC database using the data contained in
+keyrings. This is generally used for internal purposes at MARC to make
+database connections a lazier proccess with {keryring}.
 }
 \details{
-Keys should be set up prior to using the function to a style similar to:\cr
-\code{keyring::key_set("DB_<databaseName>.<schemaName>", username = "Driver={ODBC Driver 17 for SQL Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;")}\cr
+Keys should be set up prior to using the function to a style similar
+to:\cr \code{keyring::key_set("DB_<databaseName>.<schemaName>", username =
+"Driver={ODBC Driver 17 for SQL
+Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;")}\cr
 Leave the PWD section in the username argument written as PASSWORD as this is
-automatically replaced with the stored password when calling \code{connectODBC()}
+automatically replaced with the stored password when calling
+\code{connectODBC()}
 }
 \section{Creation notes}{
  First created in 2020-Sept for easily accessing

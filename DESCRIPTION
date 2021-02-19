@@ -30,7 +30,8 @@ Imports:
     RSelenium,
     binman,
     rappdirs,
-    semver
+    semver,
+    rlang
 Suggests: 
     esri2sf (>= 0.1.1),
     osmdata
