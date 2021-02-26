@@ -23,5 +23,6 @@ MARC-KC/COVID-10_MARC Repository
 \examples{
 \dontrun{
 sumNA(iris[['Sepal.Length']])
+sumNA(c(NA, TRUE, FALSE, TRUE))
 }
 }
