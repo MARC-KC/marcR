@@ -34,7 +34,9 @@ DBI_getColNames <- function(conn, schema, tableName) {
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
 #'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
 #' @param query SQL Query to server to request table
-#'
+#' 
+#' @param roundRealDigits Optionally round digits of all doubles. Takes an integer to fill in the `digits`
+# argument of `round`. Default NULL causes this argument to be ignored.
 #'
 #' @return Tibble of a database table
 #'
@@ -53,12 +55,16 @@ DBI_getColNames <- function(conn, schema, tableName) {
 #' }
 #'
 #' @export
-DBI_getOBDCtable <- function(conn, query) {
-  data <- query %>% 
+DBI_getOBDCtable <- function(conn, query, roundRealDigits = NULL) {
+  out <- query %>% 
     DBI::dbGetQuery(conn, .) %>% 
     tibble::as_tibble()
   
-  return(data)
+  if (!is.null(roundRealDigits)) {
+    out <- out %>% roundReal(digits = roundRealDigits)
+  }
+  
+  out
 }
 
 

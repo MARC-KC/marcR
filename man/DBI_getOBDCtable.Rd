@@ -4,13 +4,15 @@
 \alias{DBI_getOBDCtable}
 \title{Get Table from OBDC connection}
 \usage{
-DBI_getOBDCtable(conn, query)
+DBI_getOBDCtable(conn, query, roundRealDigits = NULL)
 }
 \arguments{
 \item{conn}{A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
 returned by \code{\link[DBI:dbConnect]{dbConnect()}}.}
 
 \item{query}{SQL Query to server to request table}
+
+\item{roundRealDigits}{Optionally round digits of all doubles. Takes an integer to fill in the \code{digits}}
 }
 \value{
 Tibble of a database table
