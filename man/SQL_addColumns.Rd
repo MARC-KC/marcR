@@ -4,17 +4,20 @@
 \alias{SQL_addColumns}
 \title{SQL_addColumns}
 \usage{
-SQL_addColumns(df = NULL, types = NULL, names, charLength, tableName)
+SQL_addColumns(df = NULL, types = NULL, charLength, colNames = NULL, tableName)
 }
 \arguments{
-\item{df}{data.frame/tibble. Optional. Must have df or types specified}
+\item{df}{data.frame/tibble. Optional. Must have df or types specified.}
 
 \item{types}{Character vector of new column types (readr-like). Optional.
-Must have df or types specified}
+Must have df or types specified.}
 
-\item{names}{Character vector of columns names to include in database table}
+\item{charLength}{Vector of lengths used for character (NVARCHAR) types. If
+using the df argument, it will also accept a named vector of lengths for
+each column name with a character type.}
 
-\item{charLength}{Vector of lengths used for character (NVARCHAR) types.}
+\item{colNames}{Character vector of columns names to include in database
+table. Ignored if using the df argument.}
 
 \item{tableName}{Name of database table you want to create.}
 }
@@ -29,7 +32,7 @@ Creates raw SQL query to be used to add columns to a table
 \dontrun{
 head(iris)
 irisdf_addcolumns <- tibble::tibble(test = as.integer(1),
-test2 = 'test', test3 = TRUE, test4 = Sys.time())
+                                    test2 = 'test', test3 = TRUE, test4 = Sys.time())
 irisHelper <- tibble::tribble(
   ~name,      ~length,  ~type,
   'test',     NA,       'i',
@@ -37,10 +40,10 @@ irisHelper <- tibble::tribble(
   'test3',    NA,       'l',
   'test4',    NA,       'T',
 )
-SQL_addColumns(df = irisdf_addcolumns, names = irisHelper[['name']], 
-charLength = irisHelper[['length']], tableName = "schema.iris")
-SQL_addColumns(types = irisHelper[['type']], names = irisHelper[['name']], 
-charLength = irisHelper[['length']], tableName = "schema.iris")
+SQL_addColumns(df = irisdf_addcolumns, charLength = c("test2" = 10), 
+               tableName = "schema.iris")
+SQL_addColumns(types = irisHelper[['type']], colNames = irisHelper[['name']],
+               charLength = irisHelper[['length']], tableName = "schema.iris")
 }
 
 }

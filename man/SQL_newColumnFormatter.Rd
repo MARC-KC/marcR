@@ -4,20 +4,25 @@
 \alias{SQL_newColumnFormatter}
 \title{SQL_newColumnFormatter}
 \usage{
-SQL_newColumnFormatter(df = NULL, types = NULL, names, charLength)
+SQL_newColumnFormatter(df = NULL, types = NULL, charLength, colNames = NULL)
 }
 \arguments{
-\item{df}{data.frame/tibble. Optional. Must have df or types specified}
+\item{df}{data.frame/tibble. Optional. Must have df or types specified.}
 
-\item{types}{Character vector of new column types (readr-like). Optional. Must have df or types specified}
+\item{types}{Character vector of new column types (readr-like). Optional.
+Must have df or types specified.}
 
-\item{names}{Character vector of columns names to include in database table}
+\item{charLength}{Vector of lengths used for character (NVARCHAR) types. If
+using the df argument, it will also accept a named vector of lengths for
+each column name with a character type.}
 
-\item{charLength}{Vector of lengths used for character (NVARCHAR) types.}
+\item{colNames}{Character vector of columns names to include in database
+table. Ignored if using the df argument.}
 }
 \value{
 A string containing partial SQL query for column definitions.
 }
 \description{
-Creates the column definition part of a SQL query. Used as a helper for \code{SQL_createTable} and \code{SQL_addColumns}
+Creates the column definition part of a SQL query. Used as a
+helper for \code{SQL_createTable} and \code{SQL_addColumns}
 }
