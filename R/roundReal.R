@@ -5,7 +5,8 @@
 #' @description Rounds all doubles (skipping dates and POSIX) in a data.frame to
 #'   a specified number of digits. Created to use with SQL tables that sometimes
 #'   have small number rounding errors.
-#'   
+#'  
+#' @param df Input data.frame to mutate
 #' @param digits Number of digits to round to. Default is 5.
 #'   
 #' @return A data.frame/tibble

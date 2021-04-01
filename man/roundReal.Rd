@@ -7,6 +7,8 @@
 roundReal(df, digits = 5)
 }
 \arguments{
+\item{df}{Input data.frame to mutate}
+
 \item{digits}{Number of digits to round to. Default is 5.}
 }
 \value{
