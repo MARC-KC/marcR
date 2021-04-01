@@ -7,21 +7,24 @@
 SQL_createTable(
   df = NULL,
   types = NULL,
-  names,
   charLength,
+  colNames = NULL,
   tableName,
   primaryKey = NULL
 )
 }
 \arguments{
-\item{df}{data.frame/tibble. Optional. Must have df or types specified}
+\item{df}{data.frame/tibble. Optional. Must have df or types specified.}
 
 \item{types}{Character vector of new column types (readr-like). Optional.
-Must have df or types specified}
+Must have df or types specified.}
 
-\item{names}{Character vector of columns names to include in database table}
+\item{charLength}{Vector of lengths used for character (NVARCHAR) types. If
+using the df argument, it will also accept a named vector of lengths for
+each column name with a character type.}
 
-\item{charLength}{Vector of lengths used for character (NVARCHAR) types.}
+\item{colNames}{Character vector of columns names to include in database
+table. Ignored if using the df argument.}
 
 \item{tableName}{Name of database table you want to create.}
 
@@ -51,11 +54,10 @@ irisHelper <- tibble::tribble(
   'Species',          '10',     'c'
 )
 
-SQL_createTable(df = iris, names = irisHelper[['name']],
-   charLength = irisHelper[['length']],
-   tableName = "schema.iris", primaryKey = 'UniqueID')
-SQL_createTable(types = irisHelper[['type']] , names = irisHelper[['name']],
-   charLength = irisHelper[['length']], tableName = "schema.iris")
+SQL_createTable(df = iris, charLength = c("Species" = 10),
+                tableName = "schema.iris", primaryKey = 'UniqueID')
+SQL_createTable(types = irisHelper[['type']] , colNames = irisHelper[['name']],
+                charLength = irisHelper[['length']], tableName = "schema.iris")
 }
 
 }
