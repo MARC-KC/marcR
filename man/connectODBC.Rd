@@ -7,8 +7,8 @@
 connectODBC(databaseString = NULL)
 }
 \arguments{
-\item{databaseString}{Same as the service saved in the keyring. Default NULL
-will list the available keys prefixed with 'DB_'}
+\item{databaseString}{Same as the username saved in the keyring. Default NULL
+will list the available keys under the service 'DB_conn'}
 }
 \value{
 OBDC connection object returned from DBI::dbConnect()
@@ -20,11 +20,12 @@ database connections a lazier proccess with {keryring}.
 }
 \details{
 Keys should be set up prior to using the function to a style similar
-to:\cr \code{keyring::key_set("DB_<databaseName>.<schemaName>", username =
-"Driver={ODBC Driver 17 for SQL
-Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;")}\cr
-Leave the PWD section in the username argument written as PASSWORD as this is
-automatically replaced with the stored password when calling
+to:\cr \code{keyring::key_set("DB_conn", username =
+  "<databaseName>.<schemaName>")}\cr The password should then be set to the
+connection string: "Driver={ODBC Driver 17 for SQL
+Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;"\cr
+Leave the PWD section in the username argument written as PASSWORD as this
+is automatically replaced with the stored password when calling
 \code{connectODBC()}
 }
 \section{Creation notes}{
@@ -38,13 +39,9 @@ library(glue)
 library(magrittr)
 library(DBI)
 
-con <- connectODBC("DB_<databaseName>.<schemaName>")
+con <- connectODBC("<databaseName>.<schemaName>")
 
-glue::glue("
-SELECT *
-  FROM <schemaName>.<tableName>
-") \%>\%
-  DBI::dbGetQuery(con, .)
+DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>")
 }
 }
 \author{
