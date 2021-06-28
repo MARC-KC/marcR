@@ -30,7 +30,7 @@ OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 \dontrun{
 library(DBI)
 
-con <- connectODBC("DB_<databaseName>.<schemaName>")
+con <- connectODBC("<databaseName>.<schemaName>")
 
 tableColNames <- DBI_getColNames(con, "<schemaName>", "<tableName>")
 }
