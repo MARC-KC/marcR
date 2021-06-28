@@ -244,7 +244,7 @@ FROM {schema}.{tableName}
 #' @export
 dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCHEMA$", "^db_\\.*")) {
   
-  all_schemas <- DBI::dbGetQuery(PUBconn, "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA")[['SCHEMA_NAME']]
+  all_schemas <- DBI::dbGetQuery(conn, "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA")[['SCHEMA_NAME']]
   
   if (is.null(rmSchemaRegex)) {
     out <- all_schemas
