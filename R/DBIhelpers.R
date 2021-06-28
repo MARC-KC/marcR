@@ -18,7 +18,7 @@
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("DB_<databaseName>.<schemaName>")
+#' con <- connectODBC("<databaseName>.<schemaName>")
 #'
 #' tableColNames <- DBI_getColNames(con, "<schemaName>", "<tableName>")
 #' }
@@ -49,7 +49,7 @@ DBI_getColNames <- function(conn, schema, tableName) {
 #' 
 #' library(DBI)
 #'
-#' con <- connectODBC("DB_<databaseName>.<schemaName>")
+#' con <- connectODBC("<databaseName>.<schemaName>")
 #'
 #' table <- DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
 #' }
@@ -92,7 +92,7 @@ DBI_getOBDCtable <- function(conn, query, roundRealDigits = NULL) {
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("DB_<databaseName>.<schemaName>")
+#' con <- connectODBC("<databaseName>.<schemaName>")
 #' 
 #' #This is not set up to be a real example
 #' tableColNames <- DBI_appendSFtoTable(con, sfTable, "<schemaName>", "<tableName>")
@@ -192,7 +192,7 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("DB_<databaseName>.<schemaName>")
+#' con <- connectODBC("<databaseName>.<schemaName>")
 #'
 #' #This is not set up to be a real example
 #' tableColNames <- sf_readSQL(con, "<schemaName>", "<tableName>", "geom")
@@ -215,5 +215,116 @@ FROM {schema}.{tableName}
   
   return(out)
 }
+
+
+#' @title List all schema in database
+#'
+#' @description Searches schema in in the INFORMATION_SCHEMA.SCHEMATA table.
+#'   Confirmed only to work with MS-SQL databases.
+#'
+#' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
+#'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
+#' @param rmSchemaRegex Character vector containing schema to avoid searching
+#'   (removed schema regex). Ignores some default system level schema and schema
+#'   only used by the ESRI SDE bindings that don't actually contain user created
+#'   tables.
+#'
+#' @return A character vector of schema's in the database connections.
+#'
+#' @author Jacob Peterson
+#'
+#' @examples
+#' \dontrun{
+#'
+#' con <- connectODBC("<databaseName>.<schemaName>")
+#'
+#' #This is not set up to be a real example
+#' schemas <- dbListSchema(con)
+#' }
+#' @export
+dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCHEMA$", "^db_\\.*")) {
+  
+  all_schemas <- DBI::dbGetQuery(PUBconn, "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA")[['SCHEMA_NAME']]
+  
+  if (is.null(rmSchemaRegex)) {
+    out <- all_schemas
+  } else {
+    out <- stringr::str_subset(all_schemas, pattern = paste0(rmSchemaRegex, collapse = "|"), negate = TRUE)
+  }
+  
+  out    
+}
+
+
+#' @title List all tables in a database
+#'
+#' @description A more informative version of `DBI::dbListTables()` which only
+#'   contains table names. This functions also pairs each table with its Schema
+#'   and can handle checking if the table has spatial data or not.
+#'
+#' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
+#'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
+#' @param addGeoIndicator TRUE/FALSE. Should the `isSpatial` column be exported.
+#'   Default is FALSE.
+#' @param rmTableRegex Character vector containing table names to avoid
+#'   searching (removed table regex). Ignores some tables that are only used by
+#'   the ESRI SDE bindings that don't actually contain user created data.
+#' @param ... Additional options passed to dbListSchema
+#'
+#' @return A dataframe with a row for each table in the database connection.
+#'   Contains 2 or 3 columns ('schema', 'table', and optionally 'isSpatial').
+#'   The return dataframe can then easily be searched, filtered, and queried to
+#'   find the tables you were looking for.
+#'
+#' @author Jacob Peterson
+#'
+#' @examples
+#' \dontrun{
+#'
+#' con <- connectODBC("<databaseName>.<schemaName>")
+#'
+#' #This is not set up to be a real example
+#' tables <- dbListTableStructure(con, addGeoIndicator = TRUE)
+#' }
+#' @export
+dbListTableStructure <- function(conn, addGeoIndicator = FALSE, rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_", "^sysdiagrams$"), ...) {
+  
+  schemas <- dbListSchema(conn, ...)
+  
+  
+  out <- purrr::map_dfr(schemas, ~{
+    tables <- DBI::dbListTables(conn, schema = .x)
+    if (length(tables) == 0) {
+      out <- tibble::tibble(schema = character(), table = character())
+    } else {
+      out <- tibble::tibble(schema = .x, table = tables)
+    }
+    out
+  })
+  
+  if (!is.null(rmTableRegex)) {
+    out <- out %>% dplyr::filter(stringr::str_detect(table, paste0(rmTableRegex, collapse = "|"), negate = TRUE))
+  }
+  
+  if (addGeoIndicator) {
+    out[['isSpatial']] <-  purrr::pmap_lgl(out, function(schema, table, ...) {
+      SQLquery <- glue::glue("
+                       SELECT *  
+                       FROM INFORMATION_SCHEMA.COLUMNS 
+                       WHERE TABLE_SCHEMA = '{schema}' AND TABLE_NAME = '{table}' AND (DATA_TYPE = 'geometry' OR DATA_TYPE = 'geography')"
+      )
+      nrow(marcR::DBI_getOBDCtable(conn, SQLquery))>0
+    })
+  }
+  
+  out
+  
+}
+
+
+
+
+
+
 
 
