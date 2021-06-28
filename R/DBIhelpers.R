@@ -259,7 +259,7 @@ dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCH
 #' @title List all tables in a database
 #'
 #' @description A more informative version of `DBI::dbListTables()` which only
-#'   contains table names. This functions also pairs each table with its Schema
+#'   contains table names. This functions also pairs each table with its schema
 #'   and can handle checking if the table has spatial data or not.
 #'
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
@@ -272,9 +272,9 @@ dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCH
 #' @param ... Additional options passed to dbListSchema
 #'
 #' @return A dataframe with a row for each table in the database connection.
-#'   Contains 2 or 3 columns ('schema', 'table', and optionally 'isSpatial').
-#'   The return dataframe can then easily be searched, filtered, and queried to
-#'   find the tables you were looking for.
+#'   Contains 3 or 4 columns ('database', 'schema', 'table', and optionally
+#'   'isSpatial'). The return dataframe can then easily be searched, filtered,
+#'   and queried to find the tables you were looking for.
 #'
 #' @author Jacob Peterson
 #'
@@ -295,9 +295,9 @@ dbListTableStructure <- function(conn, addGeoIndicator = FALSE, rmTableRegex = c
   out <- purrr::map_dfr(schemas, ~{
     tables <- DBI::dbListTables(conn, schema = .x)
     if (length(tables) == 0) {
-      out <- tibble::tibble(schema = character(), table = character())
+      out <- tibble::tibble(database = character(), schema = character(), table = character())
     } else {
-      out <- tibble::tibble(schema = .x, table = tables)
+      out <- tibble::tibble(database = conn@info$dbname, schema = .x, table = tables)
     }
     out
   })

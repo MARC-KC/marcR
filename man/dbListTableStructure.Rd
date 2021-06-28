@@ -26,13 +26,13 @@ the ESRI SDE bindings that don't actually contain user created data.}
 }
 \value{
 A dataframe with a row for each table in the database connection.
-Contains 2 or 3 columns ('schema', 'table', and optionally 'isSpatial').
-The return dataframe can then easily be searched, filtered, and queried to
-find the tables you were looking for.
+Contains 3 or 4 columns ('database', 'schema', 'table', and optionally
+'isSpatial'). The return dataframe can then easily be searched, filtered,
+and queried to find the tables you were looking for.
 }
 \description{
 A more informative version of \code{DBI::dbListTables()} which only
-contains table names. This functions also pairs each table with its Schema
+contains table names. This functions also pairs each table with its schema
 and can handle checking if the table has spatial data or not.
 }
 \examples{
