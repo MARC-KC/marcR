@@ -242,7 +242,7 @@ FROM {schema}.{tableName}
 #' schemas <- dbListSchema(con)
 #' }
 #' @export
-dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCHEMA$", "^db_\\.*")) {
+dbListSchemas <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCHEMA$", "^db_\\.*")) {
   
   all_schemas <- DBI::dbGetQuery(conn, "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA")[['SCHEMA_NAME']]
   
