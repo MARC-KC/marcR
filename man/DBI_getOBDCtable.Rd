@@ -30,7 +30,7 @@ MARC-KC/CovidDataEntry Repository
 
 library(DBI)
 
-con <- connectODBC("<databaseName>.<schemaName>")
+con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 
 table <- DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
 }

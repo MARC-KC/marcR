@@ -39,7 +39,7 @@ OSMdownloadAndSFtoSQLInterface.R in the MARC-KC/HelpLibrary Repository
 \dontrun{
 library(DBI)
 
-con <- connectODBC("<databaseName>.<schemaName>")
+con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 
 #This is not set up to be a real example
 tableColNames <- DBI_appendSFtoTable(con, sfTable, "<schemaName>", "<tableName>")

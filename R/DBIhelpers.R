@@ -18,7 +18,7 @@
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #'
 #' tableColNames <- DBI_getColNames(con, "<schemaName>", "<tableName>")
 #' }
@@ -49,7 +49,7 @@ DBI_getColNames <- function(conn, schema, tableName) {
 #' 
 #' library(DBI)
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #'
 #' table <- DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>") 
 #' }
@@ -92,7 +92,7 @@ DBI_getOBDCtable <- function(conn, query, roundRealDigits = NULL) {
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #' 
 #' #This is not set up to be a real example
 #' tableColNames <- DBI_appendSFtoTable(con, sfTable, "<schemaName>", "<tableName>")
@@ -192,7 +192,7 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 #' \dontrun{
 #' library(DBI)
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #'
 #' #This is not set up to be a real example
 #' tableColNames <- sf_readSQL(con, "<schemaName>", "<tableName>", "geom")
@@ -236,7 +236,7 @@ FROM {schema}.{tableName}
 #' @examples
 #' \dontrun{
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #'
 #' #This is not set up to be a real example
 #' schemas <- dbListSchema(con)
@@ -260,19 +260,24 @@ dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCH
 #'
 #' @description A more informative version of `DBI::dbListTables()` which only
 #'   contains table names. This functions also pairs each table with its schema
-#'   and can handle checking if the table has spatial data or not.
+#'   and can handle checking if the table has spatial data and identify if it 
+#'   is a view.
 #'
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
 #'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
-#' @param addGeoIndicator TRUE/FALSE. Should the `isSpatial` column be exported.
+#' @param addGeoIndicator TRUE/FALSE. Should the `isSpatial` column be exported?
 #'   Default is FALSE.
+#' @param includeViews TRUE/FALSE. Should output included views?
 #' @param rmTableRegex Character vector containing table names to avoid
 #'   searching (removed table regex). Ignores some tables that are only used by
 #'   the ESRI SDE bindings that don't actually contain user created data.
-#' @param ... Additional options passed to dbListSchema
+#' @param rmSchemaRegex Character vector containing schema to avoid searching
+#'   (removed schema regex). Ignores some default system level schema and schema
+#'   only used by the ESRI SDE bindings that don't actually contain user created
+#'   tables.
 #'
 #' @return A dataframe with a row for each table in the database connection.
-#'   Contains 3 or 4 columns ('database', 'schema', 'table', and optionally
+#'   Contains 4 or 5 columns ('Database', 'Schema', 'Table', 'isView', and optionally
 #'   'isSpatial'). The return dataframe can then easily be searched, filtered,
 #'   and queried to find the tables you were looking for.
 #'
@@ -281,43 +286,47 @@ dbListSchema <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SCH
 #' @examples
 #' \dontrun{
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' conn <- connectODBC("<servername>.<databaseName>.<schemaName>")
 #'
 #' #This is not set up to be a real example
-#' tables <- dbListTableStructure(con, addGeoIndicator = TRUE)
+#' tables <- dbListTableStructure(conn, addGeoIndicator = TRUE)
 #' }
 #' @export
-dbListTableStructure <- function(conn, addGeoIndicator = FALSE, rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_", "^sysdiagrams$"), ...) {
+dbTableStructure <- function(conn, addGeoIndicator = FALSE, includeViews = TRUE, rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_", "^sysdiagrams$"), rmSchemaRegex = c("sde")) {
   
-  schemas <- dbListSchema(conn, ...)
+  tables <- marcR::DBI_getOBDCtable(conn, "SELECT * FROM INFORMATION_SCHEMA.TABLES")
   
-  
-  out <- purrr::map_dfr(schemas, ~{
-    tables <- DBI::dbListTables(conn, schema = .x)
-    if (length(tables) == 0) {
-      out <- tibble::tibble(database = character(), schema = character(), table = character())
-    } else {
-      out <- tibble::tibble(database = conn@info$dbname, schema = .x, table = tables)
-    }
-    out
-  })
-  
-  if (!is.null(rmTableRegex)) {
-    out <- out %>% dplyr::filter(stringr::str_detect(table, paste0(rmTableRegex, collapse = "|"), negate = TRUE))
+  #Filter data
+  if (!is.null(rmTableRegex) | length(rmTableRegex) != 0) {
+    tables <- dplyr::filter(tables, stringr::str_detect(TABLE_NAME, paste0(rmTableRegex, collapse = "|"), negate = TRUE))
+  }
+  if (!is.null(rmSchemaRegex) | length(rmSchemaRegex) != 0) {
+    tables <- dplyr::filter(tables, stringr::str_detect(TABLE_SCHEMA, paste0(rmSchemaRegex, collapse = "|"), negate = TRUE))
   }
   
+  #Add Spatial Indicator
   if (addGeoIndicator) {
-    out[['isSpatial']] <-  purrr::pmap_lgl(out, function(schema, table, ...) {
+    tables[['isSpatial']] <-  purrr::pmap_lgl(tables, function(TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, TABLE_TYPE, ...) {
       SQLquery <- glue::glue("
                        SELECT *  
                        FROM INFORMATION_SCHEMA.COLUMNS 
-                       WHERE TABLE_SCHEMA = '{schema}' AND TABLE_NAME = '{table}' AND (DATA_TYPE = 'geometry' OR DATA_TYPE = 'geography')"
+                       WHERE TABLE_SCHEMA = '{TABLE_SCHEMA}' AND TABLE_NAME = '{TABLE_NAME}' AND (DATA_TYPE = 'geometry' OR DATA_TYPE = 'geography')"
       )
       nrow(marcR::DBI_getOBDCtable(conn, SQLquery))>0
     })
   }
   
-  out
+  #Rename Columns
+  tables <- dplyr::rename(tables, c("Database" = "TABLE_CATALOG", 'Schema' = 'TABLE_SCHEMA', 
+                                    'Table' = "TABLE_NAME", "isView" = "TABLE_TYPE"))
+
+  #Handle Views Column
+  tables <- dplyr::mutate(tables, isView = isView == "VIEW")
+  if (!includeViews) {
+    tables <- dplyr::filter(tables, !isView)
+  }
+  
+  tables
   
 }
 

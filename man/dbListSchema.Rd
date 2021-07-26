@@ -28,7 +28,7 @@ Confirmed only to work with MS-SQL databases.
 \examples{
 \dontrun{
 
-con <- connectODBC("<databaseName>.<schemaName>")
+con <- connectODBC("<servername>.<databaseName>.<schemaName>")
 
 #This is not set up to be a real example
 schemas <- dbListSchema(con)
