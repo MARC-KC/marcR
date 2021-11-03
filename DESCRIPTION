@@ -9,7 +9,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: 
     magrittr,
     glue,
@@ -31,7 +31,10 @@ Imports:
     binman,
     rappdirs,
     semver,
-    rlang
+    rlang,
+    utils,
+    git2r,
+    here
 Suggests: 
     esri2sf (>= 0.1.1),
     osmdata
