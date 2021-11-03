@@ -45,7 +45,10 @@ Install a package level version of Java.
 \examples{
 \dontrun{
 java_install(
-    installLocation = file.path(normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"), 'APPDATA', 'Local', "MicrosoftOpenJDK"),
+    installLocation = file.path(
+        normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"), 
+        'APPDATA', 'Local', "MicrosoftOpenJDK"
+    ),
     majorVersion = "17"
 )
 }

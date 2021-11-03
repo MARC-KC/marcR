@@ -17,7 +17,10 @@
 #' @examples 
 #' \dontrun{
 #' java_install(
-#'     installLocation = file.path(normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"), 'APPDATA', 'Local', "MicrosoftOpenJDK"),
+#'     installLocation = file.path(
+#'         normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"), 
+#'         'APPDATA', 'Local', "MicrosoftOpenJDK"
+#'     ),
 #'     majorVersion = "17"
 #' )
 #' }
@@ -49,7 +52,7 @@ java_install <- function(installLocation = here::here("JavaEnv"),
   #Add/update gitignore
   if (git2r::in_repository(installLocation)) {
     javaFolderName <- utils::unzip(downloadFile, list = TRUE)$Name[[1]]
-    gitignoreFile <- file.path(dirname(installLocation), '.gitignore')
+    gitignoreFile <- file.path(installLocation, '.gitignore')
     if (!('.gitignore' %in% list.files(installLocation))) {
       write(javaFolderName, gitignoreFile)
     } else if (!(javaFolderName %in% readLines(gitignoreFile))) {
