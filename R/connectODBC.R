@@ -5,13 +5,17 @@
 #'   database connections a lazier proccess with {keryring}.
 #'
 #' @details Keys should be set up prior to using the function to a style similar
-#'   to:\cr \code{keyring::key_set("DB_conn", username =
-#'   "<databaseName>.<schemaName>")}\cr The password should then be set to the
-#'   connection string: "Driver={ODBC Driver 17 for SQL
-#'   Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;"\cr
-#'    Leave the PWD section in the username argument written as PASSWORD as this
+#'   to:  
+#'   
+#'   `keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<schemaName>")`  
+#'   
+#'   The password should then be set to the connection string formatted like:  
+#'   
+#'   "`Driver={ODBC Driver 17 for SQL Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;`"  
+#'   
+#'   Leave the PWD section in the username argument written as PASSWORD as this
 #'   is automatically replaced with the stored password when calling
-#'   \code{connectODBC()}
+#'   `connectODBC()`.
 #'
 #' @param databaseString Same as the username saved in the keyring. Default NULL
 #'   will list the available keys under the service 'DB_conn'
@@ -30,7 +34,7 @@
 #' library(magrittr)
 #' library(DBI)
 #'
-#' con <- connectODBC("<databaseName>.<schemaName>")
+#' con <- connectODBC("<serverName>.<databaseName>.<schemaName>")
 #' 
 #' DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>")
 #' }

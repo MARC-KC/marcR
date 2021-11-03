@@ -20,13 +20,17 @@ database connections a lazier proccess with {keryring}.
 }
 \details{
 Keys should be set up prior to using the function to a style similar
-to:\cr \code{keyring::key_set("DB_conn", username =
-  "<databaseName>.<schemaName>")}\cr The password should then be set to the
-connection string: "Driver={ODBC Driver 17 for SQL
-Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;"\cr
+to:
+
+\code{keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<schemaName>")}
+
+The password should then be set to the connection string formatted like:
+
+"\verb{Driver=\{ODBC Driver 17 for SQL Server\};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;}"
+
 Leave the PWD section in the username argument written as PASSWORD as this
 is automatically replaced with the stored password when calling
-\code{connectODBC()}
+\code{connectODBC()}.
 }
 \section{Creation notes}{
  First created in 2020-Sept for easily accessing
@@ -39,7 +43,7 @@ library(glue)
 library(magrittr)
 library(DBI)
 
-con <- connectODBC("<databaseName>.<schemaName>")
+con <- connectODBC("<serverName>.<databaseName>.<schemaName>")
 
 DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>")
 }
