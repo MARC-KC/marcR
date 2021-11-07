@@ -146,7 +146,7 @@ SQL_createTable <- function(df = NULL, types = NULL, charLength, colNames = NULL
   }
   
   #Format the full CREATE TABLE query
-  SQLout <- glue::glue('CREATE TABLE {tableName} ( \n{marcR::glueIndentLines(innerSQL, 1)}\n)')
+  SQLout <- glue::glue('CREATE TABLE {tableName} ( \n{marcR::glueIndentLines(innerSQL, 1)}\n);')
   
   return(SQLout)
 }
@@ -196,7 +196,7 @@ SQL_addColumns <- function(df = NULL, types = NULL, charLength, colNames = NULL,
   innerSQL <- SQL_newColumnFormatter(df = df, types = types, colNames = colNames, charLength = charLength)
   
   #Format the full CREATE TABLE query
-  SQLout <- glue::glue('ALTER TABLE {tableName}\nADD\n{marcR::glueIndentLines(innerSQL, 1)}')
+  SQLout <- glue::glue('ALTER TABLE {tableName}\nADD\n{marcR::glueIndentLines(innerSQL, 1)};')
   
   return(SQLout)
   
