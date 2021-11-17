@@ -3,16 +3,17 @@
 \name{java_install}
 \alias{java_install}
 \alias{java_get_versions}
-\title{Install Microsoft built OpenJDK Binaries}
+\title{Install Microsoft or Adoptium built OpenJDK Binaries}
 \usage{
 java_install(
   installLocation = here::here("JavaEnv"),
   majorVersion = "11",
+  source = c("microsoft", "adoptium"),
   os = c("windows", "linux", "macOS"),
   arch = c("x64", "aarch64")
 )
 
-java_get_versions()
+java_get_versions(source = c("microsoft", "adoptium"))
 }
 \arguments{
 \item{installLocation}{The location you want to install Java to. Defaults to
@@ -22,6 +23,9 @@ to a 'renv' project directory, the user folder like
 
 \item{majorVersion}{A major java version to download. Must be one listed by
 \code{validJavaVersions()}.}
+
+\item{source}{What binary version do you want to install? Either 'microsoft'
+or 'adoptium'.}
 
 \item{os}{One of 'windows', 'linux', or 'macOS'. Currently only 'windows' is
 valid.}
@@ -46,10 +50,11 @@ Install a package level version of Java.
 \dontrun{
 java_install(
     installLocation = file.path(
-        normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"), 
-        'APPDATA', 'Local', "MicrosoftOpenJDK"
+        normalizePath(Sys.getenv("USERPROFILE"), winslash = "/"),
+        'APPDATA', 'Local', "r-OpenJDK"
     ),
-    majorVersion = "17"
+    majorVersion = "17", 
+    source = "adoptium"
 )
 }
 
