@@ -17,7 +17,7 @@ Imports:
     odbc,
     dplyr,
     stringr,
-    keyring,
+    keyring (>= 1.2.0),
     purrr,
     tibble,
     crayon,
