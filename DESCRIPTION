@@ -34,7 +34,8 @@ Imports:
     rlang,
     utils,
     git2r,
-    here
+    here,
+    jsonlite
 Suggests: 
     esri2sf (>= 0.1.1),
     osmdata
