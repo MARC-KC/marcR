@@ -85,14 +85,14 @@ java_get_versions <- function(source = c("microsoft", "adoptium")) {
   source = match.arg(source)
   
   if (source == 'microsoft') {
-  url <- "https://docs.microsoft.com/en-us/java/openjdk/download"
-  out <- rvest::read_html(url) %>% 
-    rvest::html_elements("h3[id^=openjdk-]") %>% 
-    rvest::html_attr("id") %>% 
-    sub("^openjdk-", "", .) %>% 
-    as.integer() %>% 
-    sort() %>% 
-    as.character()
+    url <- "https://docs.microsoft.com/en-us/java/openjdk/download"
+    out <- rvest::read_html(url) %>% 
+      rvest::html_elements("h3[id^=openjdk-]") %>% 
+      rvest::html_attr("id") %>% 
+      sub("^openjdk-", "", .) %>% 
+      as.integer() %>% 
+      sort() %>% 
+      as.character()
   } else if (source == 'adoptium') {
     url <- "https://adoptium.net/releases.html"
     queryUrl <- 'https://api.adoptium.net'
