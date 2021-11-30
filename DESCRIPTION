@@ -35,10 +35,10 @@ Imports:
     utils,
     git2r,
     here,
-    jsonlite,
-    lifecycle
+    jsonlite
 Suggests: 
     esri2sf (>= 0.1.1),
-    osmdata
+    osmdata,
+    lifecycle
 Remotes: 
     github::yonghah/esri2sf

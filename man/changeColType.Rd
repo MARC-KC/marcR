@@ -2,7 +2,7 @@
 % Please edit documentation in R/changeColTypes.R
 \name{changeColType}
 \alias{changeColType}
-\title{Changes column types based on vectors of column names and readr types}
+\title{Change Column Types}
 \usage{
 changeColType(df, cols, types)
 }
@@ -17,6 +17,7 @@ changeColType(df, cols, types)
 A data.frame/tibble
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Changes column types based on vectors of column names and readr types
 }
 \section{Creation notes}{
