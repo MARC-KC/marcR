@@ -14,6 +14,8 @@ will list the available keys under the service 'DB_conn'}
 OBDC connection object returned from DBI::dbConnect()
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Creates connection to ODBC database using the data contained in
 keyrings. This is generally used for internal purposes at MARC to make
 database connections a lazier proccess with {keryring}.

@@ -19,7 +19,7 @@ returned by \code{\link[DBI:dbConnect]{dbConnect()}}.}
 Character vector of column names in specified table.
 }
 \description{
-Retrieve Column Names from an Microsoft SQL Connection
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \section{Creation notes}{
  First created on 2020-11-03 with the script

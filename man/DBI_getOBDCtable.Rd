@@ -18,7 +18,7 @@ returned by \code{\link[DBI:dbConnect]{dbConnect()}}.}
 Tibble of a database table
 }
 \description{
-Get Table from OBDC connection
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \section{Creation notes}{
  First created in 2020-12-11 while working in the

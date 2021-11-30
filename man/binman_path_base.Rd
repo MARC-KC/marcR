@@ -13,6 +13,8 @@ binman_path_base(path = here::here())
 Returns a file path
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Get the default base path for a binman download folder. If your
 working directory is in a project with a 'renv' folder, it will suggest
 that as the install location. Otherwise the path specified by

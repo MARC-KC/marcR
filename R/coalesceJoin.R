@@ -1,7 +1,10 @@
 
 #' @title Coalesce Duplicate Fields from a Join
 #' 
-#' @description Coalesces columns by suffix created by joins. Useful after a full join.
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Coalesces columns by suffix created by joins. Useful after a full join.
 #' 
 #' @param df the joined data.frame
 #' @param suffix suffix used to diferentiate the columns needing coalesced. Defaults to c(".x", ".y")

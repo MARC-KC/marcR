@@ -1,6 +1,9 @@
 #' @title Change Epoch Time to Datetime
 #'
-#' @description Converts epoch time to a POSIXct/datetime. This is a common task
+#' @description 
+#' `r lifecycle::badge('stable')`
+#' 
+#' Converts epoch time to a POSIXct/datetime. This is a common task
 #' when reading in data with dates from an ESRI REST API.
 #'
 #' @param epochDate numeric vector with the epoch date

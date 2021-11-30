@@ -1,5 +1,7 @@
 #' @title Retrieve Column Names from an Microsoft SQL Connection
 #'
+#' @description 
+#' `r lifecycle::badge('stable')`  
 #'
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
 #'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
@@ -31,6 +33,9 @@ DBI_getColNames <- function(conn, schema, tableName) {
 
 #' @title Get Table from OBDC connection
 #'
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
 #'   returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
 #' @param query SQL Query to server to request table
@@ -72,6 +77,8 @@ DBI_getOBDCtable <- function(conn, query, roundRealDigits = NULL) {
 
 #' @title Append sf table to a Microsoft SQL table
 #'
+#' @description 
+#' `r lifecycle::badge('experimental')`  
 #'
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as returned by \code{\link[DBI:dbConnect]{dbConnect()}}.
 #' @param sfTable sf object to append to specified database table
@@ -169,7 +176,10 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 
 #' @title Read Spatial SQL Table to sf
 #'
-#' @description Is basically a wrapper around
+#' @description 
+#' `r lifecycle::badge('experimental')`
+#' 
+#' Is basically a wrapper around
 #'   \code{\link[sf:st_read]{sf::st_read()}} that does a necessary
 #'   transformation on the SQL geometry datatype to read in as a sf table
 #'
@@ -219,7 +229,10 @@ FROM {schema}.{tableName}
 
 #' @title List all schema in database
 #'
-#' @description Searches schema in in the INFORMATION_SCHEMA.SCHEMATA table.
+#' @description 
+#' `r lifecycle::badge('maturing')`
+#' 
+#' Searches schema in in the INFORMATION_SCHEMA.SCHEMATA table.
 #'   Confirmed only to work with MS-SQL databases.
 #'
 #' @param conn A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
@@ -258,7 +271,10 @@ dbListSchemas <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SC
 
 #' @title List all tables in a database
 #'
-#' @description A more informative version of `DBI::dbListTables()` which only
+#' @description 
+#' `r lifecycle::badge('maturing')`
+#' 
+#' A more informative version of `DBI::dbListTables()` which only
 #'   contains table names. This functions also pairs each table with its schema
 #'   and can handle checking if the table has spatial data and identify if it 
 #'   is a view.

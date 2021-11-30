@@ -22,6 +22,8 @@ geometry column in the SQL table}
 An sf object
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Is basically a wrapper around
 \code{\link[sf:st_read]{sf::st_read()}} that does a necessary
 transformation on the SQL geometry datatype to read in as a sf table

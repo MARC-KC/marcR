@@ -1,5 +1,8 @@
 #' @title {binman}-like Pre download Github assets
-#' @description This is a wrapper around \code{binman::predl_github_assets()}
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' This is a wrapper around \code{binman::predl_github_assets()}
 #'   that adds the parameter \code{dlPath} that allows the user to specify the
 #'   binman download path. This was built to allow custom binman install
 #'   directories for project specific environments.
@@ -68,7 +71,10 @@ binman_predl_github_assets <- function(url, platform, history = 3L, appname, pla
 
 
 #' @title Get suggested binman path
-#' @description Get the default base path for a binman download folder. If your
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Get the default base path for a binman download folder. If your
 #'   working directory is in a project with a 'renv' folder, it will suggest
 #'   that as the install location. Otherwise the path specified by
 #'   \code{rappdirs::user_data_dir()} will be used.

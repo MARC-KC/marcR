@@ -16,6 +16,8 @@ TRUE}
 Vector of class POSIXct
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Converts epoch time to a POSIXct/datetime. This is a common task
 when reading in data with dates from an ESRI REST API.
 }

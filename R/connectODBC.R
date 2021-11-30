@@ -1,6 +1,9 @@
 #' @title Connect to ODBC Database Using keyring
 #'
-#' @description Creates connection to ODBC database using the data contained in
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Creates connection to ODBC database using the data contained in
 #'   keyrings. This is generally used for internal purposes at MARC to make
 #'   database connections a lazier proccess with {keryring}.
 #'

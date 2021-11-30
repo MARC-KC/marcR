@@ -22,6 +22,8 @@ tables.}
 A character vector of schema's in the database connections.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
 Searches schema in in the INFORMATION_SCHEMA.SCHEMATA table.
 Confirmed only to work with MS-SQL databases.
 }

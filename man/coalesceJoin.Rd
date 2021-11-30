@@ -17,6 +17,8 @@ coalesceJoin(df, suffix = c(".x", ".y"), showMessage = TRUE)
 df with the join suffixed columns coalesced
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Coalesces columns by suffix created by joins. Useful after a full join.
 }
 \examples{

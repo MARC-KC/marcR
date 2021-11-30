@@ -28,7 +28,7 @@ DBI_appendSFtoTable(
 \item{warnings}{Warning key. Use \code{-1} to hide warning messages in function.}
 }
 \description{
-Append sf table to a Microsoft SQL table
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \section{Creation notes}{
  First created on 2020-11-03 with the script

@@ -37,6 +37,8 @@ Contains 4 or 5 columns ('Database', 'Schema', 'Table', 'isView', and optionally
 and queried to find the tables you were looking for.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
 A more informative version of \code{DBI::dbListTables()} which only
 contains table names. This functions also pairs each table with its schema
 and can handle checking if the table has spatial data and identify if it

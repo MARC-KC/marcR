@@ -1,7 +1,8 @@
 #' @title Change Column Types
 #' 
 #' @description 
-#' `r lifecycle::badge('stable')`
+#' `r lifecycle::badge('stable')`  
+#' 
 #' Changes column types based on vectors of column names and readr types
 #' 
 #' @param df data.frame/tibble

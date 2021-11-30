@@ -40,6 +40,8 @@ data.frame should contain the version, url and file to be processed. Used
 as input for \code{\link{download_files}} or an equivalent.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 This is a wrapper around \code{binman::predl_github_assets()}
 that adds the parameter \code{dlPath} that allows the user to specify the
 binman download path. This was built to allow custom binman install
