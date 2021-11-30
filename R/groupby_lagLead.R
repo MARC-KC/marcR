@@ -1,7 +1,10 @@
 
 #' Helpers for group_by |> mutate(leadOrLag)
 #' 
-#' @description Cuts down on typing to preform relatively common functions.
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Cuts down on typing to preform relatively common functions.
 #' 
 #' @param .data data.frame/tibble
 #' @param ... group_by fields past to group_by

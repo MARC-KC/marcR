@@ -1,5 +1,8 @@
 #' @title Is {renv} used in current directory/project?
-#' @description Check if your current workspace is in a project with renv
+#' @description 
+#' `r lifecycle::badge('experimental')`  
+#' 
+#' Check if your current workspace is in a project with renv
 #'   enabled. This is kind of a hack and just looks for a renv folder, but it
 #'   should work.
 #'

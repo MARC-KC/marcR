@@ -3,7 +3,10 @@
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #' @title  map_date and map2_date
 #' 
-#' @description Wrappers for purrr::map and purrr::map2 to output dates
+#' @description 
+#' `r lifecycle::badge('maturing')`  
+#' 
+#' Wrappers for purrr::map and purrr::map2 to output dates
 #' 
 #' @param .x,.y list or atomic vector.
 #' @param .f A function, formula, or vector (not necessarily atomic).

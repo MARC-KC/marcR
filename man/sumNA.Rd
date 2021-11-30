@@ -13,6 +13,8 @@ sumNA(vec)
 Sum of input vector
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Wrapper around sum that defaults na.rm to TRUE
 }
 \section{Creation notes}{

@@ -15,6 +15,8 @@ MARCDataAPI_read(url, query = NULL)
 OBDC connection object returned from DBI::dbConnect()
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Creates a GET request for a MARCDataAPI URL and returns the result as a tibble
 }
 \details{

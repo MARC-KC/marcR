@@ -17,6 +17,8 @@ mutateCalcString(df, mutateName, mutateCalc)
 data.frame/tibble with mutated columns
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
 Allows a mutation given a string for the calculation side of the mutation
 }
 \section{Creation notes}{

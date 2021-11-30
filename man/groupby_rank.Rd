@@ -33,7 +33,7 @@ groupby_rank(
 tibble
 }
 \description{
-Helper for group_by |> mutate(rankID) |> filter(rankID)
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Uses a dense rank to mimic Microsoft T-SQL rank

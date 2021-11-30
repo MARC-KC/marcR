@@ -13,6 +13,8 @@ is_renv_used(path = here::here())
 Returns a TRUE/FALSE
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Check if your current workspace is in a project with renv
 enabled. This is kind of a hack and just looks for a renv folder, but it
 should work.

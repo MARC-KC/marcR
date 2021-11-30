@@ -1,6 +1,9 @@
 #' @title Easily Download Open Street Map Data
 #'
-#' @description Downloads multiple vector datasets from Open Street Maps given a
+#' @description 
+#' `r lifecycle::badge('experimental')`  
+#' 
+#' Downloads multiple vector datasets from Open Street Maps given a
 #'   dataframe of key-value pairs and a bounding box.
 #'
 #' @param keyValDF Dataframe with two columns, 'key' and 'value'. Can be created
@@ -104,7 +107,10 @@ osm_keyValueDL <- function(keyValDF, bbox) {
 
 #' @title Retrieve all Key-Value Pairs Open Street Map Data
 #'
-#' @description Downloads and creates a dataframe for all key-value pairs in OSM
+#' @description 
+#' `r lifecycle::badge('experimental')`  
+#' 
+#' Downloads and creates a dataframe for all key-value pairs in OSM
 #'   data. This function is parameterless.
 #'
 #' @return A data frame with two columns, 'key' and 'value'.

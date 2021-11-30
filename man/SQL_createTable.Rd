@@ -35,6 +35,8 @@ not create one.}
 A string containing the SQL code to create the specified table
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Creates raw SQL query to be used to create a table
 }
 \section{Creation notes}{

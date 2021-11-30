@@ -1,6 +1,9 @@
 #' @title Install Microsoft or Adoptium built OpenJDK Binaries
 #'
-#' @description Install a package level version of Java.
+#' @description 
+#' `r lifecycle::badge('maturing')`  
+#' 
+#' Install a package level version of Java.
 #'
 #' @param installLocation The location you want to install Java to. Defaults to
 #'   here::here("JavaEnv") in your project directory, but could also be stored

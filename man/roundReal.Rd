@@ -15,6 +15,8 @@ roundReal(df, digits = 5)
 A data.frame/tibble
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Rounds all doubles (skipping dates and POSIX) in a data.frame to
 a specified number of digits. Created to use with SQL tables that sometimes
 have small number rounding errors.

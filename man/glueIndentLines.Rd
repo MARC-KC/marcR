@@ -15,6 +15,8 @@ glueIndentLines(string, tabs = 1)
 A \code{glue} character string
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Splits a string by newlines and adds a chosen number of tabs to each line.
 }
 \section{Creation notes}{

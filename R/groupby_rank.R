@@ -1,5 +1,8 @@
 #' Helper for group_by |> mutate(rankID) |> filter(rankID)
 #' 
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
 #' @param .data data.frame/tibble
 #' @param ... group_by fields passed to group_by
 #' @param rankby what column to rank by as character

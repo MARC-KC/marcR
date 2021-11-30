@@ -1,6 +1,9 @@
 #' @title Download Data from MARCDataAPI
 #'
-#' @description Creates a GET request for a MARCDataAPI URL and returns the result as a tibble
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Creates a GET request for a MARCDataAPI URL and returns the result as a tibble
 #'
 #'
 #' @param url A url to a MARCDataAPI.

@@ -37,6 +37,8 @@ Adds the unzipped/untared package to the location specified by
 installLocation.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
 Install a package level version of Java.
 }
 \section{Functions}{

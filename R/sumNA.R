@@ -1,5 +1,8 @@
 #' @title sumNA
-#' @description Wrapper around sum that defaults na.rm to TRUE
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Wrapper around sum that defaults na.rm to TRUE
 #' 
 #' @param vec numeric, double or integer vector
 #' 

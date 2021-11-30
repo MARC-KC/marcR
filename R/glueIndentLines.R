@@ -1,6 +1,8 @@
 #' @title Indent lines
 #'
-#' @description
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
 #' Splits a string by newlines and adds a chosen number of tabs to each line.
 #' 
 #'

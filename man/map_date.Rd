@@ -41,6 +41,8 @@ present, the value of \code{.default} will be returned.}
 Returns a vector of dates
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
 Wrappers for purrr::map and purrr::map2 to output dates
 }
 \examples{

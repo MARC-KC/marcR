@@ -1,5 +1,8 @@
 #' @title mutateCalcString
-#' @description Allows a mutation given a string for the calculation side of the mutation
+#' @description 
+#' `r lifecycle::badge('maturing')`  
+#' 
+#' Allows a mutation given a string for the calculation side of the mutation
 #' 
 #' @param df data.frame/tibble to change
 #' @param mutateName name of the column you want to change or create with the mutation

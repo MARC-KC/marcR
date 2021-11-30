@@ -17,7 +17,7 @@ renameByPairs(df, currentNames, newNames)
 A tibble
 }
 \description{
-Changes column names based on vectors containing old and new colNames
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \section{Creation notes}{
  First created in 2020-12-11 while working in the

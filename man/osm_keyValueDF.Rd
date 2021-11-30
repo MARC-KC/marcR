@@ -10,6 +10,8 @@ osm_keyValueDF()
 A data frame with two columns, 'key' and 'value'.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Downloads and creates a dataframe for all key-value pairs in OSM
 data. This function is parameterless.
 }

@@ -2,7 +2,10 @@
 
 
 #' @title SQL_newColumnFormatter
-#' @description Creates the column definition part of a SQL query. Used as a
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Creates the column definition part of a SQL query. Used as a
 #'   helper for \code{SQL_createTable} and \code{SQL_addColumns}
 #'
 #' @param df data.frame/tibble. Optional. Must have df or types specified.
@@ -95,7 +98,10 @@ SQL_newColumnFormatter <- function(df = NULL, types = NULL, charLength, colNames
 
 
 #' @title SQL_createTable
-#' @description Creates raw SQL query to be used to create a table
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Creates raw SQL query to be used to create a table
 #'
 #' @param df data.frame/tibble. Optional. Must have df or types specified.
 #' @param types Character vector of new column types (readr-like). Optional.
@@ -156,7 +162,10 @@ SQL_createTable <- function(df = NULL, types = NULL, charLength, colNames = NULL
 
 
 #' @title SQL_addColumns
-#' @description Creates raw SQL query to be used to add columns to a table
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Creates raw SQL query to be used to add columns to a table
 #'
 #' @param df data.frame/tibble. Optional. Must have df or types specified.
 #' @param types Character vector of new column types (readr-like). Optional.

@@ -2,7 +2,10 @@
 
 #' @title Round all doubles in a data.frame
 #'
-#' @description Rounds all doubles (skipping dates and POSIX) in a data.frame to
+#' @description 
+#' `r lifecycle::badge('stable')`  
+#' 
+#' Rounds all doubles (skipping dates and POSIX) in a data.frame to
 #'   a specified number of digits. Created to use with SQL tables that sometimes
 #'   have small number rounding errors.
 #'  

@@ -23,6 +23,8 @@ table. Ignored if using the df argument.}
 A string containing partial SQL query for column definitions.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Creates the column definition part of a SQL query. Used as a
 helper for \code{SQL_createTable} and \code{SQL_addColumns}
 }
