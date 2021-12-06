@@ -308,7 +308,7 @@ dbListSchemas <- function(conn, rmSchemaRegex = c("sys", "sde", "^INFORMATION_SC
 #' tables <- dbListTableStructure(conn, addGeoIndicator = TRUE)
 #' }
 #' @export
-dbTableStructure <- function(conn, addGeoIndicator = FALSE, includeViews = TRUE, rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_", "^sysdiagrams$"), rmSchemaRegex = c("sde")) {
+dbTableStructure <- function(conn, addGeoIndicator = FALSE, includeViews = TRUE, rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_"), rmSchemaRegex = c("sde")) {
   
   tables <- marcR::DBI_getOBDCtable(conn, "SELECT * FROM INFORMATION_SCHEMA.TABLES")
   
