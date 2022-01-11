@@ -8,7 +8,7 @@ dbTableStructure(
   conn,
   addGeoIndicator = FALSE,
   includeViews = TRUE,
-  rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_", "^sysdiagrams$"),
+  rmTableRegex = c("^[:alpha:][:digit:]+$", "^SDE_"),
   rmSchemaRegex = c("sde")
 )
 }
