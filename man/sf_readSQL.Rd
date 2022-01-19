@@ -4,7 +4,14 @@
 \alias{sf_readSQL}
 \title{Read Spatial SQL Table to sf}
 \usage{
-sf_readSQL(conn, schema, tableName, geomCol)
+sf_readSQL(
+  conn,
+  schema,
+  tableName,
+  geomCol,
+  whereClause = "",
+  as_tibble = TRUE
+)
 }
 \arguments{
 \item{conn}{A \code{\link[DBI:DBIConnection-class]{DBIConnection}} object, as
@@ -17,6 +24,10 @@ returned by \code{\link[DBI:dbConnect]{dbConnect()}}.}
 
 \item{geomCol}{Character vector of length 1 containing the name of the
 geometry column in the SQL table}
+
+\item{whereClause}{The WHERE clause for the SQL Query}
+
+\item{as_tibble}{Passed to \code{sf::st_read()}. Default is TRUE}
 }
 \value{
 An sf object

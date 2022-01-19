@@ -190,6 +190,8 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 #' @param tableName Name of table. character vector of length 1.
 #' @param geomCol Character vector of length 1 containing the name of the
 #'   geometry column in the SQL table
+#' @param whereClause The WHERE clause for the SQL Query
+#' @param as_tibble Passed to `sf::st_read()`. Default is TRUE
 #'
 #' @return An sf object
 #'
@@ -208,20 +210,27 @@ DBI_appendSFtoTable <- function(conn, sfTable, schema, tableName, createTableQue
 #' tableColNames <- sf_readSQL(con, "<schemaName>", "<tableName>", "geom")
 #' }
 #' @export
-sf_readSQL <- function(conn, schema, tableName, geomCol) {
+sf_readSQL <- function(conn, schema, tableName, geomCol, whereClause = "", as_tibble = TRUE) {
   
   tableColNames <- DBI_getColNames(conn, schema, tableName)
   
   tableColStr <- tableColNames %>% stringr::str_replace(geomCol, glue::glue("{geomCol}].STAsBinary() AS [{geomCol}")) %>% glue::glue_collapse(sep = "], [")
   
+  if (whereClause != "") {
+    whereClause <- paste0("WHERE ", whereClause)
+  }
+   
+  
   query <- glue::glue("
-SELECT [{tableColStr}]
-FROM {schema}.{tableName}
-")
+    SELECT [{tableColStr}]
+    FROM {schema}.{tableName}
+    {whereClause}
+    ")
   
   out <- sf::st_read(conn, 
                      geometry_column = geomCol, 
-                     query = query)
+                     query = query,
+                     as_tibble = as_tibble)
   
   return(out)
 }
