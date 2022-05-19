@@ -10,11 +10,11 @@
 #' @details Keys should be set up prior to using the function to a style similar
 #'   to:  
 #'   
-#'   `keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<schemaName>")`  
+#'   `keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<userName>")`  
 #'   
 #'   The password should then be set to the connection string formatted like:  
 #'   
-#'   "`Driver={ODBC Driver 17 for SQL Server};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;`"  
+#'   "`Driver={ODBC Driver 17 for SQL Server};Server=<serverName>;Database=<databaseName>;UID=<userName>;PWD=<password>;`"  
 #'   
 #'   Leave the PWD section in the username argument written as PASSWORD as this
 #'   is automatically replaced with the stored password when calling
@@ -37,7 +37,7 @@
 #' library(magrittr)
 #' library(DBI)
 #'
-#' con <- connectODBC("<serverName>.<databaseName>.<schemaName>")
+#' con <- connectODBC("<serverName>.<databaseName>.<userName>")
 #' 
 #' DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>")
 #' }
@@ -59,7 +59,7 @@ connectODBC <- function(databaseString = NULL) {
   #If input is in old format stop and provide a message about the new format
   if (stringr::str_detect(databaseString, "DB_MARC")) {
     stop(paste0("Using keys in the format of 'DB_<DB_name>.<schema_name>' has been depreciated.\n", 
-                "Use new format: service = 'DB_conn', username = '<DB_name>.<schema_name>'\n",
+                "Use new format: service = 'DB_conn', username = '<serverName>.<databaseName>.<userName>'\n",
                 "See example for new format."))
   }
   

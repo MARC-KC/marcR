@@ -24,11 +24,11 @@ database connections a lazier proccess with {keryring}.
 Keys should be set up prior to using the function to a style similar
 to:
 
-\code{keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<schemaName>")}
+\code{keyring::key_set("DB_conn", username = "<serverName>.<databaseName>.<userName>")}
 
 The password should then be set to the connection string formatted like:
 
-"\verb{Driver=\{ODBC Driver 17 for SQL Server\};Server=<serverName>;Database=<databaseName>;UID=<schemaName>;PWD=<password>;}"
+"\verb{Driver=\{ODBC Driver 17 for SQL Server\};Server=<serverName>;Database=<databaseName>;UID=<userName>;PWD=<password>;}"
 
 Leave the PWD section in the username argument written as PASSWORD as this
 is automatically replaced with the stored password when calling
@@ -45,7 +45,7 @@ library(glue)
 library(magrittr)
 library(DBI)
 
-con <- connectODBC("<serverName>.<databaseName>.<schemaName>")
+con <- connectODBC("<serverName>.<databaseName>.<userName>")
 
 DBI_getOBDCtable(con, "SELECT * FROM <schemaName>.<tableName>")
 }
